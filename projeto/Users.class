@@ -1,0 +1,10 @@
+
+public class User{
+    public String login;
+    public String senha;
+
+    public User(final String login, final int senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+}
