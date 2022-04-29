@@ -7,10 +7,10 @@ public class Menu {
     Users user = new Users("name", "login", "password", "none", "none");
     MenuLogin menulogin = new MenuLogin();
     boolean exit;
+    
+    
     public void runMenu(ArrayList<Users> users){
         while(!exit){
-            System.out.print("\033[H\033[2J");  
-            System.out.flush();
             printmenu();
             int choice = getInput();
             perfomAction(choice, users);
@@ -48,19 +48,19 @@ public class Menu {
         switch(choice){
             case 0:
             exit = true;
-            System.out.print("\033[H\033[2J");  
-            System.out.flush(); 
+            //System.out.print("\033[H\033[2J");  
+            //System.out.flush(); 
             System.out.println("\nThank you for using our application.");
             break;
             case 1:
-            System.out.print("\033[H\033[2J");  
-            System.out.flush();
+            //System.out.print("\033[H\033[2J");  
+            //System.out.flush();
             loginInf(users);
             break;
             
             case 2:
-            System.out.print("\033[H\033[2J");  
-            System.out.flush();
+            //System.out.print("\033[H\033[2J");  
+            //System.out.flush();
             registerInf(users);
             break;
 
@@ -97,6 +97,10 @@ public class Menu {
          
          if(password.equals(password2)){
             user.register(nickname, username, password, users); 
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
+            System.out.println("registered user!");
+            return;
          }
          else{
              System.out.println("\nPasswords are not the same ");
@@ -105,6 +109,7 @@ public class Menu {
     }
 
     private void loginInf(ArrayList<Users> users){
+        boolean it = false;
         System.out.println("\nenter your username:");
         Scanner u = new Scanner(System.in);
         String login = u.next();
@@ -113,13 +118,32 @@ public class Menu {
                 System.out.println("\nenter yous password: ");
                 Scanner p = new Scanner(System.in);
                 String password = p.next();
+                it = true;
                 
                 if(user.getpassword().equals(password)){
                     menulogin.runMenuLogin(user, users);
                 }
-            }
+                else{
+                    it = false;
+                }
+
+            }  
         }
-        System.out.println("\nUser not registered. ");
+        if(it == false){
+           
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                System.out.println("\nuser is not registered!");
+                runMenu(users);
+        }
+
+
+
+        //System.out.print("\033[H\033[2J");  
+        //System.out.flush();
+        
+
+        
+
     }
-    
 }

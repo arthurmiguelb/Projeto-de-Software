@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Users.Users;
 
-public class MenuLogin {
+public class MenuLogin{
     boolean exit;
-
+    
     public void runMenuLogin(Users user, ArrayList<Users> users){
+
+        exit = false;
         while(!exit){
             System.out.print("\033[H\033[2J");  
             System.out.flush();
@@ -16,17 +18,18 @@ public class MenuLogin {
      }
 
      private void printMenuLogin(Users user){
-        System.out.println("\n+------------------------------+");
-        System.out.println("|                              |");
-        System.out.println("|           Welcome "+user.name+"          |");
-        System.out.println("|                              |");
-        System.out.println("+------------------------------+");
-         System.out.println("\n1) profile");
-         System.out.println("2) news feed");
-         System.out.println("3) friends");
-         System.out.println("4) community");
-         System.out.println("5) delete profile");
-         System.out.println("0) exit");
+         
+            System.out.println("\n+------------------------------+");
+            System.out.println("|                              |");
+            System.out.println("|           Welcome "+user.name+"          |");
+            System.out.println("|                              |");
+            System.out.println("+------------------------------+");
+            System.out.println("\n1) profile");
+            System.out.println("2) news feed");
+            System.out.println("3) friends");
+            System.out.println("4) community");
+            System.out.println("5) delete profile");
+            System.out.println("0) exit");
 
      }
      private int getInputMenu1(){
@@ -52,11 +55,15 @@ public class MenuLogin {
         // int choice3 = b.nextInt();
         switch(choice){
             case 0:
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
             exit = true;
             System.out.println("\nThank you for using our application.");
             break;
 
             case 1:
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
             profileMenu(user, users);
             break;
         
@@ -70,41 +77,63 @@ public class MenuLogin {
             break;
 
             case 5:
+            String option;
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
+            System.out.println("do you want to remove your profile?\n");
+            System.out.println("y/n?");
+            Scanner a = new Scanner(System.in);
+            option = a.next();
+            if(option.equals("y")){
+                exit = true;
+                delete_profile(user, users);
+                System.out.println("your profile has been removed!");
+                
+                break;
+            }
+            else if(option.equals("n")){
             break;
+            }
 
             default:
         }
     }
 
     private void profileMenu(Users user, ArrayList<Users> users){
-        System.out.println("\n1) show my profile");
-        System.out.println("2) edit my profile");
-        System.out.println("0) exit");
-        Scanner b = new Scanner(System.in);
-        int choice = b.nextInt();
-        switch(choice){
-            case 0:
-            System.out.println("\nThank you for using our application.");
-             break;
-
-            case 1:
-            System.out.println(user);
-            return;
         
-            case 2:
-            profileEdit(user, users);
-            return;
+        while(true){
+            
+            System.out.println("\n1) show my profile");
+            System.out.println("2) edit my profile");
+            System.out.println("0) exit");
+            Scanner b = new Scanner(System.in);
+            int choice = b.nextInt();
+            switch(choice){
+                case 0:
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                System.out.println("\nThank you for using our application.");
+                return;
 
-            case 3:
-            break;
+                case 1:
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                System.out.println(user);
+                break;
+            
+                case 2:
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
+                profileEdit(user, users);
+                break;
 
-            default:
+                default:
+            }
         }
-
 
     }
 
-   private void profileEdit(Users user, ArrayList<Users> users){
+    private void profileEdit(Users user, ArrayList<Users> users){
         System.out.println("\n1) change nickname");
         System.out.println("2) change username");
         System.out.println("3) change password");
@@ -113,16 +142,21 @@ public class MenuLogin {
         System.out.println("0) exit");
         Scanner a = new Scanner(System.in);
         int choice2 = a.nextInt();
+        
         if(choice2 == 1){
             System.out.println("\nenter your new nickname:");
             Scanner q = new Scanner(System.in);
             String newNickname = q.next();
                 for(Users User : users){
                     if(user.name.equals(newNickname)){
+                        System.out.print("\033[H\033[2J");  
+                        System.out.flush();
                     System.out.println("\nnickname already exists. ");
                     return;
                     }
                 }
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
                 user.name = newNickname;
                 System.out.println("\nSuccess!");
                 System.out.println("\n your new nickname is "+ user.name);
@@ -133,11 +167,15 @@ public class MenuLogin {
                 String newUsername = w.next();
                 for(Users User : users){
                     if(user.login.equals(newUsername)){
+                        System.out.print("\033[H\033[2J");  
+                        System.out.flush();
                     System.out.println("\nname already exists. ");
                     return;
                     }
                 }
                 user.login = newUsername;
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
                 System.out.println("\nSuccess!");
                 System.out.println("\n your new username is "+ user.login);
         }
@@ -147,6 +185,8 @@ public class MenuLogin {
                 Scanner c = new Scanner(System.in);
                 String password = c.next();
                 if(password.equals(user.getpassword())){
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
                     System.out.println("\nyour password cannot be the same as the previous!");
                     return;
                 }
@@ -158,9 +198,13 @@ public class MenuLogin {
                 user.setpassword(password); 
             }
             else{
+                System.out.print("\033[H\033[2J");  
+                System.out.flush();
                 System.out.println("\nPasswords are not the same ");
                 return;
             }
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
                 System.out.println("\nSuccess!");
                 System.out.println("\n your new password is "+ user.getpassword());
         }
@@ -171,11 +215,15 @@ public class MenuLogin {
             String newEmail = e.next();
             for(Users User : users){
                 if(user.email.equals(newEmail)){
-                System.out.println("\nemail already exists. ");
-                return;
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                    System.out.println("\nemail already exists. ");
+                    return;
                 }
             }
             user.email = newEmail;
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
             System.out.println("\nSuccess!");
             System.out.println("\n your new Email is "+ user.email);
         }
@@ -185,14 +233,24 @@ public class MenuLogin {
             String newNumber = r.next();
             for(Users User : users){
                 if(user.number.equals(newNumber)){
-                System.out.println("\nnumber already exists. ");
-                return;
+                    System.out.print("\033[H\033[2J");  
+                    System.out.flush();
+                 System.out.println("\nnumber already exists. ");
+                    return;
                 }
             }
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
             user.number = newNumber;
             System.out.println("\nSuccess!");
             System.out.println("\n your new number is "+ user.number);
 
         }
     }
+
+    private void delete_profile(Users user, ArrayList<Users> users){
+        users.remove(user);
+    }
+
+
 }
