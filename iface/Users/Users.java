@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Users {
+   ArrayList<Users> freinds = new ArrayList<>(); 
    public String name;
    public String login;
    private String password;
