@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    Users user = new Users("name", "login", "password", "none", "none");
+    Users user = new UserDo("name", "login", "password", "none", "none");
     MenuLogin menulogin = new MenuLogin();
     boolean exit;
     
     
-    public void runMenu(ArrayList<Users> users){
+    public void runMenu(ArrayList<UserDo> users){
         while(!exit){
             printmenu();
             int choice = getInput();
@@ -43,7 +43,7 @@ public class Menu {
         return choice;
     }
     
-    private void perfomAction(int choice, ArrayList<Users> users){
+    private void perfomAction(int choice, ArrayList<UserDo> users){
         switch(choice){
             case 0:
             exit = true;
@@ -67,13 +67,13 @@ public class Menu {
         }
     }
 
-    private void registerInf(ArrayList<Users> users){
+    private void registerInf(ArrayList<UserDo> users){
        
         System.out.println("\nEnter your nickname: ");
         Scanner a = new Scanner(System.in);
         String nickname = a.next();
         for(Users user : users){
-            if(user.name.equals(nickname)){
+            if(user.getName().equals(nickname)){
                 System.out.println("\nnickname already exists. ");
                 return;
             }
@@ -82,7 +82,7 @@ public class Menu {
         Scanner b = new Scanner(System.in);
         String username = b.next();
         for(Users user : users){
-            if(user.login.equals(username)){
+            if(user.getlogin().equals(username)){
                 System.out.println("\nusername already exists. ");
                 return;
             }
@@ -107,13 +107,13 @@ public class Menu {
          }
     }
 
-    private void loginInf(ArrayList<Users> users){
+    private void loginInf(ArrayList<UserDo> users){
         boolean it = false;
         System.out.println("\nenter your username:");
         Scanner u = new Scanner(System.in);
         String login = u.next();
         for(Users user : users){
-            if(user.login.equals(login)){
+            if(user.getlogin().equals(login)){
                 System.out.println("\nenter yous password: ");
                 Scanner p = new Scanner(System.in);
                 String password = p.next();

@@ -1,11 +1,12 @@
 package Users;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.jar.Attributes.Name;
 
 public class MenuLogin{
     boolean exit;
     
-    public void runMenuLogin(Users user, ArrayList<Users> users){
+    public void runMenuLogin(Users user, ArrayList<UserDo> users){
 
         exit = false;
         while(!exit){
@@ -21,7 +22,7 @@ public class MenuLogin{
          
             System.out.println("\n+------------------------------+");
             System.out.println("|                              |");
-            System.out.println("|           Welcome "+user.name+"          |");
+            System.out.println("|           Welcome "+user.getName()+"          |");
             System.out.println("|                              |");
             System.out.println("+------------------------------+");
             System.out.println("\n1) profile");
@@ -50,7 +51,7 @@ public class MenuLogin{
     }
     
 
-    private void perfomAction(int choice, Users user, ArrayList<Users> users){
+    private void perfomAction(int choice, Users user, ArrayList<UserDo> users){
         // Scanner b = new Scanner(System.in);
         // int choice3 = b.nextInt();
         switch(choice){
@@ -71,6 +72,7 @@ public class MenuLogin{
             break;
 
             case 3:
+            FriendMenu(user, users);
             break;
 
             case 4:
@@ -99,7 +101,7 @@ public class MenuLogin{
         }
     }
 
-    private void profileMenu(Users user, ArrayList<Users> users){
+    private void profileMenu(Users user, ArrayList<UserDo> users){
         
         while(true){
             
@@ -133,7 +135,7 @@ public class MenuLogin{
 
     }
 
-    private void profileEdit(Users user, ArrayList<Users> users){
+    private void profileEdit(Users user, ArrayList<UserDo> users){
         System.out.println("\n1) change nickname");
         System.out.println("2) change username");
         System.out.println("3) change password");
@@ -148,7 +150,7 @@ public class MenuLogin{
             Scanner q = new Scanner(System.in);
             String newNickname = q.next();
                 for(Users User : users){
-                    if(user.name.equals(newNickname)){
+                    if(user.getName().equals(newNickname)){
                         System.out.print("\033[H\033[2J");  
                         System.out.flush();
                     System.out.println("\nnickname already exists. ");
@@ -157,27 +159,27 @@ public class MenuLogin{
                 }
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
-                user.name = newNickname;
+                user.setName(newNickname);
                 System.out.println("\nSuccess!");
-                System.out.println("\n your new nickname is "+ user.name);
+                System.out.println("\n your new nickname is "+ user.getName());
         }
         if(choice2 == 2){
                 System.out.println("\nenter your new name:");
                 Scanner w = new Scanner(System.in);
                 String newUsername = w.next();
                 for(Users User : users){
-                    if(user.login.equals(newUsername)){
+                    if(user.getlogin().equals(newUsername)){
                         System.out.print("\033[H\033[2J");  
                         System.out.flush();
                     System.out.println("\nname already exists. ");
                     return;
                     }
                 }
-                user.login = newUsername;
+                user.setlogin(newUsername);
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println("\nSuccess!");
-                System.out.println("\n your new username is "+ user.login);
+                System.out.println("\n your new username is "+ user.getlogin());
         }
 
         if(choice2 == 3){
@@ -214,25 +216,25 @@ public class MenuLogin{
             Scanner e = new Scanner(System.in);
             String newEmail = e.next();
             for(Users User : users){
-                if(user.email.equals(newEmail)){
+                if(user.getEmail().equals(newEmail)){
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                     System.out.println("\nemail already exists. ");
                     return;
                 }
             }
-            user.email = newEmail;
+            user.setEmail(newEmail);
             System.out.print("\033[H\033[2J");  
             System.out.flush();
             System.out.println("\nSuccess!");
-            System.out.println("\n your new Email is "+ user.email);
+            System.out.println("\n your new Email is "+ user.getEmail());
         }
         if(choice2 == 5){
             System.out.println("\nenter your new number:");
             Scanner r = new Scanner(System.in);
             String newNumber = r.next();
             for(Users User : users){
-                if(user.number.equals(newNumber)){
+                if(user.getNumber().equals(newNumber)){
                     System.out.print("\033[H\033[2J");  
                     System.out.flush();
                  System.out.println("\nnumber already exists. ");
@@ -241,16 +243,72 @@ public class MenuLogin{
             }
             System.out.print("\033[H\033[2J");  
             System.out.flush();
-            user.number = newNumber;
+            user.setNumber(newNumber); 
             System.out.println("\nSuccess!");
-            System.out.println("\n your new number is "+ user.number);
+            System.out.println("\n your new number is "+ user.getNumber());
 
         }
     }
 
-    private void delete_profile(Users user, ArrayList<Users> users){
+    private void delete_profile(Users user, ArrayList<UserDo> users){
         users.remove(user);
     }
 
+    public void FriendMenu(Users user, ArrayList<UserDo> users){
+        
+        boolean exit = false;
+        System.out.println("\n1) friend requests");
+        System.out.println("2) add friend");
+        System.out.println("3) remove friend");
+        Scanner in = new Scanner(System.in);
+        int choice = in.nextInt();
+            if(choice == 1){
+                printListFriend(user ,user.request);
+            }
+             if(choice == 2){
+                 Boolean it = false;
+                System.out.println("\nenter the username of the user:");
+                Scanner a = new Scanner(System.in);
+                String nick = a.next();
+                    for(Users User : users){
+                        if(nick.equals(user.getName())){
+                            System.out.println("\ndo you want to send request to " + user.getName()+"?");
+                            System.out.println("y/n");
+                            Scanner b = new Scanner(System.in);
+                            String option = b.next();
+                                if(option.equals("y")){
+                                    user.request.add(user);  
+                                    return;
+                                }
+                                it = true;
+                        }
+                        else if(!nick.equals(user.getName())){
+                            it = false;
+                        }
+                    }
+                    if(it){
+                        System.out.println("User does not exist!");
+                        return;
+                    }
+
+            }
+        
+        
+
+        }
+
+        public void printListFriend(Users user, ArrayList<Users> request){
+            System.out.println("ENTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+    
+                for(Users users : request){
+                    
+                        System.out.println("\nrequests:");
+                        System.out.println("\n"+user.request);
+                
+                }
+        }
+
+
 
 }
+

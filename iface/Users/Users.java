@@ -1,15 +1,18 @@
 package Users;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Users {
-   ArrayList<Users> freinds = new ArrayList<>(); 
-   public String name;
-   public String login;
+public abstract class Users {
+    ArrayList<Users> friends = new ArrayList<>();
+    ArrayList<Users> menssage = new ArrayList<>();
+    ArrayList<Users> request = new ArrayList<>();
+   private String name;
+   private String login;
    private String password;
-   public String email;
-   public String number;
+   private String email;
+   private String number;
 
 
 
@@ -83,20 +86,8 @@ public class Users {
                "\n";
     }    
 
-    public void register(String nickname, String username, String password, ArrayList<Users> users){
-        users.add(new Users(nickname, username, password, email, number));
+    public void register(String nickname, String username, String password, ArrayList<UserDo> users){
+        users.add(new UserDo(nickname, username, password, email, number));
         //  printlist(users);
-    }
-    private void printlist(ArrayList<Users> users){
-        System.out.println("print list?\ns/n ");
-        Scanner a = new Scanner(System.in);
-        String option = a.next();
-        String s1 = "s";
-         
-        if(option.equals(s1)){
-            for(Users user : users){
-                System.out.println(user);
-            }
-         }
     }
 }

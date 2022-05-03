@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
 import Users.Menu;
-import Users.Users;
+import Users.UserDo;
+
 
 public class Main{
 
     public static void main(String[] args){
-        ArrayList<Users> users = new ArrayList<>();
-        users.add(new Users("admin", "adm", "admin", "none", "none"));
+        ArrayList<UserDo> users = new ArrayList<>();
+        users.add(new UserDo("admin", "adm", "admin", "none", "none"));
         Menu menu = new Menu();
         menu.runMenu(users);
     }
