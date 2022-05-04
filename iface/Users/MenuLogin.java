@@ -259,27 +259,35 @@ public class MenuLogin{
         boolean exit = false;
         System.out.println("\n1) friend requests");
         System.out.println("2) add friend");
-        System.out.println("3) remove friend");
+        System.out.println("3) list friends");
+        System.out.println("4) remove friend");
         Scanner in = new Scanner(System.in);
         int choice = in.nextInt();
             if(choice == 1){
-                printListFriend(user ,user.request);
+                printListFriend(user ,user.request, users);
             }
              if(choice == 2){
                 Boolean it = false;
                 System.out.println("\nenter the username of the user:");
                 Scanner a = new Scanner(System.in);
                 String nick = a.next();
-                    for(Users currreUsers : users){
-                        System.out.println("cu");
-                        if(nick.equals(user.getName())){
-                            System.out.println("\ndo you want to send request to " + user.getName()+"?");
-                            System.out.println("y/n");
+                int i = 0;
+                    for(i=0; i< users.size(); i++){
+                        if(nick.intern()== (users.get(i).getName().intern())){
+                            System.out.println("\ndo you want to send request to " + user.getName()+"? y/n");
                             Scanner b = new Scanner(System.in);
                             String option = b.next();
                                 if(option.equals("y")){
-                                    user.request.add(user);  
+                                    //user.request.add(user);  
+                                    users.get(i).request.add(user);
                                     System.out.println("\nfriendship request sent!");
+                                    System.out.println("\ntype to continue");
+                                    Scanner c = new Scanner(System.in);
+                                    String op = c.next();
+                                    if(op.equals("y")){
+                                        return;
+                                    }
+
                                     return;
                                 }
                                 it = true;
@@ -293,24 +301,70 @@ public class MenuLogin{
                         return;
                     }
                 }
+                if(choice == 3){
+                    listFriends(user, user.friends);
+                }
 
             }
 
-        public void printListFriend(Users user, ArrayList<Users> request){
-                System.out.println("ENTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-    
-                for(Users currentUser : request){
-                    
-                        System.out.println("\nrequests:");
-                        System.out.println("\n"+user.request);
-                        System.out.println("\n sair? s/n");
-                        Scanner a = new Scanner(System.in);
-                        String b = a.next();
-                        if(b.equals("s")){
-                            return;
-                        }
-                
+        public void printListFriend(Users user, ArrayList<Users> request, ArrayList<UserDo> users){
+            int i;
+                System.out.println("\nfriendship request: ");
+                for(i=0 ; i < request.size(); i++){
+                        
+                        System.out.println(request.get(i).getName());       
                 }
+                System.out.println("\ndo you want to accept the request? y/n?");
+                Scanner a = new Scanner(System.in);
+                String b = a.next();
+                if(b.equals("y")){
+                    aceptFriend(user, request, users);
+                }
+        }
+
+
+        public void aceptFriend(Users user, ArrayList<Users> request, ArrayList<UserDo> users){
+
+            int i;
+            for(i=0 ; i < request.size(); i++){
+
+                user.friends.add(user.request.get(i));
+                for(Users usersIdenx : users){
+                    if(usersIdenx.getName().equals(user.request.get(i).getName())){
+                        usersIdenx.friends.add(user);
+                        System.out.println(user.request.get(i));
+                        
+                    }
+                }
+                user.request.remove(i);
+
+            }
+
+            System.out.println("\nfriend request accepted!");
+            System.out.println("\ntype to go back");
+            Scanner c = new Scanner(System.in);
+            String op = c.next();
+            if(op.equals("y")){
+                return;
+            }
+
+
+        }
+
+        public void listFriends(Users user, ArrayList<Users> friends){
+            int i;
+            System.out.println("\nfriends:");
+            for(i=0; i < friends.size(); i++){
+                System.out.println(user.friends.get(i).getName());
+            }
+            System.out.println("\ntype to continue:");
+            Scanner c = new Scanner(System.in);
+            String op = c.next();
+            if(op.equals("y")){
+                return;
+            }
+            return;
+            
         }
 
 
