@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Users {
-    ArrayList<Users> friends = new ArrayList<>();
-    ArrayList<Users> menssage = new ArrayList<>();
-    ArrayList<Users> request = new ArrayList<>();
+    ArrayList<Users> friends;
+    ArrayList<Users> menssage;
+    ArrayList<Users> request;
    private String name;
    private String login;
    private String password;
@@ -22,6 +22,9 @@ public abstract class Users {
        this.password = password;
        this.email = email;
        this.number = number;
+       this.friends = new ArrayList<Users>();
+       this.request = new ArrayList<Users>();
+       this.menssage = new ArrayList<Users>();
    }
     public String getName(){
         return name;

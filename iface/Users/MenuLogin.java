@@ -266,11 +266,12 @@ public class MenuLogin{
                 printListFriend(user ,user.request);
             }
              if(choice == 2){
-                 Boolean it = false;
+                Boolean it = false;
                 System.out.println("\nenter the username of the user:");
                 Scanner a = new Scanner(System.in);
                 String nick = a.next();
-                    for(Users User : users){
+                    for(Users currreUsers : users){
+                        System.out.println("cu");
                         if(nick.equals(user.getName())){
                             System.out.println("\ndo you want to send request to " + user.getName()+"?");
                             System.out.println("y/n");
@@ -278,6 +279,7 @@ public class MenuLogin{
                             String option = b.next();
                                 if(option.equals("y")){
                                     user.request.add(user);  
+                                    System.out.println("\nfriendship request sent!");
                                     return;
                                 }
                                 it = true;
@@ -286,24 +288,27 @@ public class MenuLogin{
                             it = false;
                         }
                     }
-                    if(it){
+                    if(!it){
                         System.out.println("User does not exist!");
                         return;
                     }
+                }
 
             }
-        
-        
-
-        }
 
         public void printListFriend(Users user, ArrayList<Users> request){
-            System.out.println("ENTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+                System.out.println("ENTOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
     
-                for(Users users : request){
+                for(Users currentUser : request){
                     
                         System.out.println("\nrequests:");
                         System.out.println("\n"+user.request);
+                        System.out.println("\n sair? s/n");
+                        Scanner a = new Scanner(System.in);
+                        String b = a.next();
+                        if(b.equals("s")){
+                            return;
+                        }
                 
                 }
         }
