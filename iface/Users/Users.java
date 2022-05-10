@@ -8,6 +8,7 @@ public abstract class Users {
     ArrayList<Users> friends;
     ArrayList<String> menssage;
     ArrayList<Users> request;
+    ArrayList<Users> requestcommunity;
    private String name;
    private String login;
    private String password;
@@ -24,6 +25,7 @@ public abstract class Users {
        this.number = number;
        this.friends = new ArrayList<Users>();
        this.request = new ArrayList<Users>();
+       this.requestcommunity = new ArrayList<Users>();
        this.menssage = new ArrayList<String>();
    }
     public String getName(){

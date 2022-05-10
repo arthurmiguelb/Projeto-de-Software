@@ -2,11 +2,11 @@ package Users;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.jar.Attributes.Name;
+import Users.Community;
 
 public class MenuLogin{
-    boolean exit;
-    
-    public void runMenuLogin(Users user, ArrayList<UserDo> users){
+    boolean exit;   
+    public void runMenuLogin(Users user, ArrayList<UserDo> users, ArrayList<Community> communityList){
 
         exit = false;
         while(!exit){
@@ -14,7 +14,7 @@ public class MenuLogin{
             System.out.flush();
             printMenuLogin(user);
             int choice = getInputMenu1();
-            perfomAction(choice, user, users);
+            perfomAction(choice, user, users, communityList);
         }
      }
 
@@ -51,7 +51,7 @@ public class MenuLogin{
     }
     
 
-    private void perfomAction(int choice, Users user, ArrayList<UserDo> users){
+    private void perfomAction(int choice, Users user, ArrayList<UserDo> users, ArrayList<Community> communityList){
         // Scanner b = new Scanner(System.in);
         // int choice3 = b.nextInt();
         switch(choice){
@@ -76,6 +76,7 @@ public class MenuLogin{
             break;
 
             case 4:
+            createCommunity(user, users, communityList);
             break;
 
             case 5:
@@ -404,18 +405,10 @@ public class MenuLogin{
                     }
                         System.out.println("\ntype to continue:");
                         Scanner c = new Scanner(System.in);
-                        c.nextLine();
-        
-
-                    
-
-
-
+                        c.nextLine();           
+                    }   
                 }
-            }
         }
-
-
             public void sendMensage(Users user, ArrayList<Users> friends){
             System.out.println("\nenter friend's username to send menssage:");
             Scanner a = new Scanner(System.in);
@@ -447,5 +440,68 @@ public class MenuLogin{
         a.nextLine();
     }
 
-}
+    public void createCommunity(Users user, ArrayList<UserDo> users, ArrayList<Community> communityList){
+        int choice;
+        System.out.println("\n1) create community");
+        System.out.println("2) add members");
+        System.out.println("3) join some community");
+        Scanner a = new Scanner(System.in);
+        choice = a.nextInt();
+        if(choice == 1){
+            System.out.println("\nenter your community name: ");
+            Scanner b = new Scanner(System.in);
+            String commuName = b.nextLine();
+            System.out.println("\nenter the description of your community:");
+            Scanner c = new Scanner(System.in);
+            String descriptionCommu = c.nextLine();
+            communityList.add(new Community (user.getlogin(), user.getName(), user.getEmail(), user.getpassword(), user.getNumber(), commuName, descriptionCommu));
+            System.out.println(commuName+" created!");
+            //System.out.println(newcommu.UserAdm);
+            Scanner q = new Scanner(System.in);
+            q.nextLine();
+        }
+        if(choice == 2){
+
+        }
+        if(choice == 3){
+            Community newcommu = new Community("none","none","none","none","none","none","none");
+                System.out.println("\nactive communities:");
+                int i;
+                int p;
+                int z;
+                boolean option =  false;
+                    for(p=0; p<communityList.size(); p++){
+                        
+                        if(communityList.get(p).getNameComu().equals("none")){
+                            p++;
+                        }
+                        System.out.println(communityList.get(p).getNameComu());
+                    }
+                    System.out.println("\nenter the name of the community you want to join: ");
+                    Scanner q = new Scanner(System.in);
+                    String namecommu = q.nextLine();
+                    for(i=0; i<communityList.size(); i++){
+                        if(communityList.get(i).getNameComu().equals(namecommu)){
+                            System.out.println("ENTROU");
+                            System.out.println("\n"+communityList.get(i).getNameAdm());
+                            option = true;
+                            for(z=1; z<users.size(); z++){
+                                //nick.intern()== (users.get(i).getName().intern())
+                                if(users.get(z).getName().intern() == (communityList.get(i).getNameAdm())){
+                                    users.get(z).requestcommunity.add(user);
+
+                                }
+                            }     
+                        }
+                    }
+                    if(option == true){
+                        System.out.println("\na request has been sent to "+user.getName().equals(communityList.get(i).getNameAdm()));
+                        Scanner o = new Scanner(System.in);
+                        o.nextLine();
+                        System.out.println("\ntype to continue");
+                    }
+          }
+
+        }
+    }
 

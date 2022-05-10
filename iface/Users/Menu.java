@@ -8,11 +8,11 @@ public class Menu {
     boolean exit;
     
     
-    public void runMenu(ArrayList<UserDo> users){
+    public void runMenu(ArrayList<UserDo> users, ArrayList<Community> communitList){
         while(!exit){
             printmenu();
             int choice = getInput();
-            perfomAction(choice, users);
+            perfomAction(choice, users, communitList);
         }
     } 
     private void printmenu(){
@@ -43,7 +43,7 @@ public class Menu {
         return choice;
     }
     
-    private void perfomAction(int choice, ArrayList<UserDo> users){
+    private void perfomAction(int choice, ArrayList<UserDo> users, ArrayList<Community> communityList){
         switch(choice){
             case 0:
             exit = true;
@@ -54,7 +54,7 @@ public class Menu {
             case 1:
             //System.out.print("\033[H\033[2J");  
             //System.out.flush();
-            loginInf(users);
+            loginInf(users, communityList);
             break;
             
             case 2:
@@ -107,7 +107,7 @@ public class Menu {
          }
     }
 
-    private void loginInf(ArrayList<UserDo> users){
+    private void loginInf(ArrayList<UserDo> users, ArrayList<Community> communityList){
         boolean it = false;
         System.out.println("\nenter your username:");
         Scanner u = new Scanner(System.in);
@@ -120,7 +120,7 @@ public class Menu {
                 it = true;
                 
                 if(user.getpassword().equals(password)){
-                    menulogin.runMenuLogin(user, users);
+                    menulogin.runMenuLogin(user, users, communityList);
                     break;
                 }
                 else{
@@ -134,7 +134,7 @@ public class Menu {
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println("\nuser is not registered!");
-                runMenu(users);
+                runMenu(users, communityList);
         }
 
 
