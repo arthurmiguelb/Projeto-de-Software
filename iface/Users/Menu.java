@@ -8,11 +8,11 @@ public class Menu {
     boolean exit;
     
     
-    public void runMenu(ArrayList<UserDo> users, ArrayList<Community> communitList){
+    public void runMenu(ArrayList<UserDo> users, ArrayList<Community> communitList, ArrayList<String> feedMessages){
         while(!exit){
             printmenu();
             int choice = getInput();
-            perfomAction(choice, users, communitList);
+            perfomAction(choice, users, communitList, feedMessages);
         }
     } 
     private void printmenu(){
@@ -43,7 +43,7 @@ public class Menu {
         return choice;
     }
     
-    private void perfomAction(int choice, ArrayList<UserDo> users, ArrayList<Community> communityList){
+    private void perfomAction(int choice, ArrayList<UserDo> users, ArrayList<Community> communityList, ArrayList<String> feedMessages){
         switch(choice){
             case 0:
             exit = true;
@@ -54,7 +54,7 @@ public class Menu {
             case 1:
             //System.out.print("\033[H\033[2J");  
             //System.out.flush();
-            loginInf(users, communityList);
+            loginInf(users, communityList, feedMessages);
             break;
             
             case 2:
@@ -107,7 +107,7 @@ public class Menu {
          }
     }
 
-    private void loginInf(ArrayList<UserDo> users, ArrayList<Community> communityList){
+    private void loginInf(ArrayList<UserDo> users, ArrayList<Community> communityList, ArrayList<String> feedMessages){
         boolean it = false;
         System.out.println("\nenter your username:");
         Scanner u = new Scanner(System.in);
@@ -120,7 +120,7 @@ public class Menu {
                 it = true;
                 
                 if(user.getpassword().equals(password)){
-                    menulogin.runMenuLogin(user, users, communityList);
+                    menulogin.runMenuLogin(user, users, communityList, feedMessages);
                     break;
                 }
                 else{
@@ -134,7 +134,7 @@ public class Menu {
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
                 System.out.println("\nuser is not registered!");
-                runMenu(users, communityList);
+                runMenu(users, communityList, feedMessages);
         }
 
 

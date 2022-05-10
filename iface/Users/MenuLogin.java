@@ -5,8 +5,9 @@ import java.util.jar.Attributes.Name;
 import Users.Community;
 
 public class MenuLogin{
+    boolean feed;
     boolean exit;   
-    public void runMenuLogin(Users user, ArrayList<UserDo> users, ArrayList<Community> communityList){
+    public void runMenuLogin(Users user, ArrayList<UserDo> users, ArrayList<Community> communityList, ArrayList<String> feedMessages){
 
         exit = false;
         while(!exit){
@@ -14,7 +15,7 @@ public class MenuLogin{
             System.out.flush();
             printMenuLogin(user);
             int choice = getInputMenu1();
-            perfomAction(choice, user, users, communityList);
+            perfomAction(choice, user, users, communityList, feedMessages);
         }
      }
 
@@ -22,7 +23,7 @@ public class MenuLogin{
          
             System.out.println("\n+------------------------------+");
             System.out.println("|                              |");
-            System.out.println("|           Welcome "+user.getName()+"          |");
+            System.out.println("|           Welcome "+user.getName()+"        |");
             System.out.println("|                              |");
             System.out.println("+------------------------------+");
             System.out.println("\n1) profile");
@@ -30,13 +31,14 @@ public class MenuLogin{
             System.out.println("3) friends");
             System.out.println("4) community");
             System.out.println("5) delete profile");
+            System.out.println("6) backup");
             System.out.println("0) exit");
 
      }
      private int getInputMenu1(){
         Scanner kb = new Scanner(System.in);
         int choice = -1;
-        while(choice < 0 || choice > 5){
+        while(choice < 0 || choice > 6){
             try{
                 System.out.println("\nEnter your choice: ");
                 choice =  Integer.parseInt(kb.nextLine());
@@ -51,7 +53,7 @@ public class MenuLogin{
     }
     
 
-    private void perfomAction(int choice, Users user, ArrayList<UserDo> users, ArrayList<Community> communityList){
+    private void perfomAction(int choice, Users user, ArrayList<UserDo> users, ArrayList<Community> communityList, ArrayList<String> feedMessages){
         // Scanner b = new Scanner(System.in);
         // int choice3 = b.nextInt();
         switch(choice){
@@ -69,6 +71,7 @@ public class MenuLogin{
             break;
         
             case 2:
+            feedNews(user, users, feedMessages);
             break;
 
             case 3:
@@ -97,6 +100,9 @@ public class MenuLogin{
             else if(option.equals("n")){
             break;
             }
+
+            case 6:
+            backup(user, users);
 
             default:
         }
@@ -160,6 +166,7 @@ public class MenuLogin{
                 }
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
+                user.backup.add("old nickname "+user.getName());
                 user.setName(newNickname);
                 System.out.println("\nSuccess!");
                 System.out.println("\n your new nickname is "+ user.getName());
@@ -176,6 +183,7 @@ public class MenuLogin{
                     return;
                     }
                 }
+                user.backup.add("old login "+user.getlogin());
                 user.setlogin(newUsername);
                 System.out.print("\033[H\033[2J");  
                 System.out.flush();
@@ -198,6 +206,7 @@ public class MenuLogin{
                 String password2 = c2.next();
             
             if(password.equals(password2)){
+                user.backup.add("old password "+user.getpassword());
                 user.setpassword(password); 
             }
             else{
@@ -224,6 +233,7 @@ public class MenuLogin{
                     return;
                 }
             }
+            user.backup.add("old email "+user.getEmail());
             user.setEmail(newEmail);
             System.out.print("\033[H\033[2J");  
             System.out.flush();
@@ -244,6 +254,7 @@ public class MenuLogin{
             }
             System.out.print("\033[H\033[2J");  
             System.out.flush();
+            user.backup.add("old number "+user.getNumber());
             user.setNumber(newNumber); 
             System.out.println("\nSuccess!");
             System.out.println("\n your new number is "+ user.getNumber());
@@ -420,6 +431,7 @@ public class MenuLogin{
                      System.out.println("\ntype the message:");
                      Scanner b =  new Scanner(System.in);
                      String message = b.nextLine();
+                     user.backup.add("\nmessage from: "+username+"\n"+message);
                      friends.get(i).menssage.add("\nmessage from: "+username+"\n"+message);
                      System.out.println("\nMessage sent!");
                      System.out.println("\ntype to continue:");
@@ -451,9 +463,11 @@ public class MenuLogin{
             System.out.println("\nenter your community name: ");
             Scanner b = new Scanner(System.in);
             String commuName = b.nextLine();
+            user.backup.add("community name "+ commuName);
             System.out.println("\nenter the description of your community:");
             Scanner c = new Scanner(System.in);
             String descriptionCommu = c.nextLine();
+            user.backup.add("community description "+ descriptionCommu);
             communityList.add(new Community (user.getlogin(), user.getName(), user.getEmail(), user.getpassword(), user.getNumber(), commuName, descriptionCommu));
             System.out.println(commuName+" created!");
             //System.out.println(newcommu.UserAdm);
@@ -461,6 +475,7 @@ public class MenuLogin{
             q.nextLine();
         }
         if(choice == 2){
+            addMembers(user, users);
 
         }
         if(choice == 3){
@@ -481,27 +496,116 @@ public class MenuLogin{
                     Scanner q = new Scanner(System.in);
                     String namecommu = q.nextLine();
                     for(i=0; i<communityList.size(); i++){
-                        if(communityList.get(i).getNameComu().equals(namecommu)){
-                            System.out.println("ENTROU");
-                            System.out.println("\n"+communityList.get(i).getNameAdm());
+                        if(communityList.get(i).getNameComu().equals(namecommu)){;
                             option = true;
-                            for(z=1; z<users.size(); z++){
-                                //nick.intern()== (users.get(i).getName().intern())
-                                if(users.get(z).getName().intern() == (communityList.get(i).getNameAdm())){
+                            for(z=0; z<communityList.size(); z++){
+                                if(users.get(z).getName().equals((communityList.get(i).getNameAdm()))){
                                     users.get(z).requestcommunity.add(user);
-
                                 }
                             }     
                         }
                     }
-                    if(option == true){
-                        System.out.println("\na request has been sent to "+user.getName().equals(communityList.get(i).getNameAdm()));
-                        Scanner o = new Scanner(System.in);
-                        o.nextLine();
-                        System.out.println("\ntype to continue");
-                    }
+                     if(option == true){
+                         System.out.println("\na request has been sent to "+communityList.get(i-1).getNameAdm()+"!");
+                         Scanner o = new Scanner(System.in);
+                         o.nextLine();
+                         System.out.println("\ntype to continue");
+                     }
           }
 
         }
+
+        public void addMembers(Users user, ArrayList<UserDo> users){
+            System.out.println(" community requests:");
+            int i;
+   
+            for(i=0; i<user.requestcommunity.size(); i++){
+                System.out.println("request from ");
+                System.out.println(user.requestcommunity.get(i).getName());
+                System.out.println("\naccept? y/n" );
+                Scanner a = new Scanner(System.in);
+                String option = a.nextLine();
+                if(option.equals("y")){
+                    user.requestcommunity.add(user.requestcommunity.get(i));
+                    System.out.println("\nuser accepted in the community!");
+                    Scanner q = new Scanner(System.in);
+                    q.next();
+
+                }
+                else if(option.equals("n")){
+                    user.requestcommunity.remove(user.requestcommunity.get(i));
+                    System.out.println("\nuser removed!");
+                    Scanner q = new Scanner(System.in);
+                    q.next();
+                }
+            }
+        }
+
+        public void backup(Users user, ArrayList<UserDo> users){
+            for(String s : user.backup){
+                System.out.println(s);
+                
+                
+            }
+            Scanner q = new Scanner(System.in);
+            q.next();
+        }
+
+        public void feedNews(Users user, ArrayList<UserDo> users, ArrayList<String> feedMessages){
+            System.out.println("\n1) post to feed");
+            System.out.println("2) open feedNews");
+            System.out.println("3) enable feed for friends");
+            Scanner a = new Scanner(System.in);
+            int option = a.nextInt();
+            if(option == 1){
+                System.out.println("\nenter the message to publish:");
+                Scanner q = new Scanner(System.in);
+                String messageFeed = q.nextLine();
+                feedMessages.add("\npublication of "+user.getName()+"\n "+messageFeed);
+                user.backup.add("\npublication of "+user.getName()+"\n "+messageFeed);
+                for(UserDo userIndex : users ){
+                    for(int i=0; i<user.friends.size();i++){
+                        user.friends.get(i).feedFriends.add("\npublication of "+user.getName()+"\n "+messageFeed);
+                    } 
+                }
+            }
+            if(option == 2){
+                if(feed == false){
+                    for(String s : feedMessages){
+                        System.out.println(s);
+                    }
+            }
+                if(feed ==  true){
+                    for(String s : user.feedFriends){
+                        System.out.println(s);
+                    }
+                }
+                    Scanner q = new Scanner(System.in);
+                    q.next();
+            }
+            
+            if(option == 3){
+                System.out.println("\nenable feed visible only to friends? y/n");
+                Scanner b = new Scanner(System.in);
+                String option2 = b.nextLine();
+                if(option2.equals("y")){
+                    feed = true;
+                    System.out.println("\nfeed enabled for friends only!");
+                    Scanner v = new Scanner(System.in);
+                    v.next();
+                    return;
+                    
+                }
+                else if(option2.equals("n")){
+                    feed = false;
+                    System.out.println("\nfeed enabled only for everyone!");
+                    Scanner v = new Scanner(System.in);
+                    v.next();
+                    return;
+                }
+        }
     }
+}
+
+    
 

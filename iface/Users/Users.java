@@ -9,6 +9,8 @@ public abstract class Users {
     ArrayList<String> menssage;
     ArrayList<Users> request;
     ArrayList<Users> requestcommunity;
+    ArrayList<String> backup;
+    ArrayList<String> feedFriends;
    private String name;
    private String login;
    private String password;
@@ -27,6 +29,8 @@ public abstract class Users {
        this.request = new ArrayList<Users>();
        this.requestcommunity = new ArrayList<Users>();
        this.menssage = new ArrayList<String>();
+       this.backup =  new ArrayList<String>();
+       this.feedFriends = new ArrayList<String>();
    }
     public String getName(){
         return name;
