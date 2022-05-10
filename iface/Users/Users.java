@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public abstract class Users {
     ArrayList<Users> friends;
-    ArrayList<Users> menssage;
+    ArrayList<String> menssage;
     ArrayList<Users> request;
    private String name;
    private String login;
@@ -24,7 +24,7 @@ public abstract class Users {
        this.number = number;
        this.friends = new ArrayList<Users>();
        this.request = new ArrayList<Users>();
-       this.menssage = new ArrayList<Users>();
+       this.menssage = new ArrayList<String>();
    }
     public String getName(){
         return name;

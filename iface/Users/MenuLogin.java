@@ -260,7 +260,9 @@ public class MenuLogin{
         System.out.println("\n1) friend requests");
         System.out.println("2) add friend");
         System.out.println("3) list friends");
-        System.out.println("4) remove friend");
+        System.out.println("4) send a message to a friend");
+        System.out.println("5) received messages");
+        System.out.println("6) remove friend");
         Scanner in = new Scanner(System.in);
         int choice = in.nextInt();
             if(choice == 1){
@@ -273,8 +275,12 @@ public class MenuLogin{
                 String nick = a.next();
                 int i = 0;
                     for(i=0; i< users.size(); i++){
+                        if(nick.equals(user.getName())){
+                            it = true;
+                            break;
+                        }
                         if(nick.intern()== (users.get(i).getName().intern())){
-                            System.out.println("\ndo you want to send request to " + user.getName()+"? y/n");
+                            System.out.println("\ndo you want to send request to " + users.get(i).getName()+"? y/n");
                             Scanner b = new Scanner(System.in);
                             String option = b.next();
                                 if(option.equals("y")){
@@ -303,6 +309,16 @@ public class MenuLogin{
                 }
                 if(choice == 3){
                     listFriends(user, user.friends);
+                }
+                if(choice == 4){
+                    sendMensage(user, user.friends);
+                }
+                if(choice == 5){
+                    printMessage(user, users);
+                }
+
+                if(choice == 6){
+                    removeFriend(user, user.friends);
                 }
 
             }
@@ -367,7 +383,69 @@ public class MenuLogin{
             
         }
 
+       public void removeFriend(Users user, ArrayList<Users> friends){
+           System.out.println("\nenter friend's username");
+           Scanner a = new Scanner(System.in);
+           String nick = a.next();
+           int i;
+           for(i=0; i<friends.size(); i++){
+                if(nick.equals(user.friends.get(i).getName())){
+                    
+                    System.out.println("\nremove friend? y/n");
+                    Scanner b = new Scanner(System.in);
+                    String option = b.nextLine();
+                    if(option.equals("y")){
+                        user.friends.remove(i);
+                        System.out.println("\nfriend removed!");
+                    }
+                    else if(option.equals("n")){
+                        return;
 
+                    }
+                        System.out.println("\ntype to continue:");
+                        Scanner c = new Scanner(System.in);
+                        c.nextLine();
+        
+
+                    
+
+
+
+                }
+            }
+        }
+
+
+            public void sendMensage(Users user, ArrayList<Users> friends){
+            System.out.println("\nenter friend's username to send menssage:");
+            Scanner a = new Scanner(System.in);
+            String nick = a.next();
+            int i;
+            String username = user.getName();
+            for(i=0; i<friends.size(); i++){
+                 if(nick.equals(user.friends.get(i).getName())){
+                     System.out.println("\ntype the message:");
+                     Scanner b =  new Scanner(System.in);
+                     String message = b.nextLine();
+                     friends.get(i).menssage.add("\nmessage from: "+username+"\n"+message);
+                     System.out.println("\nMessage sent!");
+                     System.out.println("\ntype to continue:");
+                     Scanner q = new Scanner(System.in);
+                     q.next();
+                 }
+
+        }
+    }
+
+    public void printMessage(Users user, ArrayList<UserDo> users){
+        
+        for(String s : user.menssage){
+            System.out.println(s);
+        }
+        System.out.println("\ntype to continue:");      
+        Scanner a = new Scanner(System.in);
+        a.nextLine();
+    }
 
 }
 
