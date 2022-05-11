@@ -15,6 +15,29 @@ uma série de outras que há na Internet hoje em dia (Facebook, Twitter, etc.).
 
 </p>
 
+## Sobre o projeto:
+Um pacote Usuário, onde dentro possue todas as classes utilitarias:
+- Community
+- Menu
+- Menulogin
+- UserDo
+- Users
+
+* <p align="justify">Users: Uma classe absrata, onde é a base do código, possuindo todos os elementos necessarios para um usuario
+arraylist: friends, message, request, requestcommunity, backup, feedFriends.</p>
+
+* <p align="justify">@verride toString para retornar informações base do usuario.</p>
+ * <p align="justify">Uma função Register, onde registra o usuario no sistema(sujeita a polimorfismo).</p>
+
+* <p align="justify">UserDo: uma Classe que herda da Super classe Users e possue um papel de construtora, onde todos o casos de implementação passa por ela. No uso de arrays e instancias.</p>
+
+* <p align="justify">Menu: Função do Menu incial, onde ocorre os primeiros cadastros de usuarios e chama a função principal "MenuLogin".</p>
+
+* <p align="justify">MenuLogin: Função principal do code, onde o user cadastrado acessa seu menu de login, onde esta interligado com todas as outras funcionalidades. Nessa Classe temos as funções de editar perfil, adicionar e remover amigos, enviar mensagem, criar comunidade, postar no feed e fazer backup</p>
+
+* <p align="justify">Community: Uma classe que herda da classe UsersDo utiliza todos os dados dos usuarios e guarda os dados do usuario criador da comunidade.</p>
+
+
 ## Funções
 |  Título        | Descrição | Progresso atual | Finalizado | 
 |----------------|---------------|----------------|-----------|
