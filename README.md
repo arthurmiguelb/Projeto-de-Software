@@ -23,8 +23,7 @@ Um pacote Usuário, onde dentro possue todas as classes utilitarias:
 - UserDo
 - Users
 
-* <p align="justify">Users: Uma classe absrata, onde é a base do código, possuindo todos os elementos necessarios para um usuario
-arraylist: friends, message, request, requestcommunity, backup, feedFriends.</p>
+* <p align="justify">Users: Uma classe absrata, onde é a base do código, possuindo todos os elementos necessarios para um usuario arraylist: friends, message, request, requestcommunity, backup, feedFriends.</p>
 
 * <p align="justify">@verride toString para retornar informações base do usuario.</p>
  * <p align="justify">Uma função Register, onde registra o usuario no sistema(sujeita a polimorfismo).</p>
