@@ -530,6 +530,7 @@ public class MenuLogin{
                     System.out.println("\nuser accepted in the community!");
                     Scanner q = new Scanner(System.in);
                     q.next();
+                    return;
 
                 }
                 else if(option.equals("n")){
@@ -537,6 +538,7 @@ public class MenuLogin{
                     System.out.println("\nuser removed!");
                     Scanner q = new Scanner(System.in);
                     q.next();
+                    return;
                 }
             }
         }
